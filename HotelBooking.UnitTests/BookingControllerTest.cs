@@ -9,9 +9,9 @@ using Xunit;
 
 namespace HotelBooking.UnitTests
 {
-    class BookingControllerTest
+    public class BookingControllerTest
     {
-        private BookingController controller;
+        private BookingsController controller;
         private Mock<IRepository<Booking>> fakeBookingRepository;
 
         public BookingControllerTest()
@@ -19,7 +19,7 @@ namespace HotelBooking.UnitTests
             fakeBookingRepository = new Mock<IRepository<Booking>>();
 
             // Implement fake GetAll() method.
-            fakeBookingRepository.Setup(x => x.GetAll()).Returns(rooms);
+            //fakeBookingRepository.Setup(x => x.GetAll()).Returns(rooms);
 
 
             // Implement fake Get() method.
@@ -42,7 +42,7 @@ namespace HotelBooking.UnitTests
 
 
             // Create BookingController
-            controller = new BookingController(fakeBookingRepository.Object);
+            //controller = new BookingsController(fakeBookingRepository.Object);
         }
 
     }
