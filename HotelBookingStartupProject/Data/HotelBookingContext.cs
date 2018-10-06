@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HotelBooking.Models;
+using Microsoft.EntityFrameworkCore;
 using HotelBookingStartupProject.Models;
 
 namespace HotelBookingStartupProject.Data
