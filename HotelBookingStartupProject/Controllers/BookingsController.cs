@@ -10,14 +10,14 @@ namespace HotelBooking.Controllers
 {
     public class BookingsController : Controller
     {
-        private IRepository<Booking> bookingRepository;
-        private IRepository<Customer> customerRepository;
-        private IRepository<Room> roomRepository;
+        private IRepository<Models.Booking> bookingRepository;
+        private IRepository<Models.Customer> customerRepository;
+        private IRepository<Models.Room> roomRepository;
         private IBookingManager bookingManager;
         private IBookingViewModel bookingViewModel;
 
-        public BookingsController(IRepository<Booking> bookingRepos, IRepository<Room> roomRepos, 
-            IRepository<Customer> customerRepos, IBookingManager manager, IBookingViewModel viewModel)
+        public BookingsController(IRepository<Models.Booking> bookingRepos, IRepository<Models.Room> roomRepos, 
+            IRepository<Models.Customer> customerRepos, IBookingManager manager, IBookingViewModel viewModel)
         {
             bookingRepository = bookingRepos;
             roomRepository = roomRepos;
@@ -41,7 +41,7 @@ namespace HotelBooking.Controllers
                 return NotFound();
             }
 
-            Booking booking = bookingRepository.Get(id.Value);
+            Models.Booking booking = bookingRepository.Get(id.Value);
             if (booking == null)
             {
                 return NotFound();
@@ -62,7 +62,7 @@ namespace HotelBooking.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("StartDate,EndDate,CustomerId")] Booking booking)
+        public IActionResult Create([Bind("StartDate,EndDate,CustomerId")] HotelBooking.Models.Booking booking)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace HotelBooking.Controllers
                 return NotFound();
             }
 
-            Booking booking = bookingRepository.Get(id.Value);
+            Models.Booking booking = bookingRepository.Get(id.Value);
             if (booking == null)
             {
                 return NotFound();
@@ -102,7 +102,7 @@ namespace HotelBooking.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("StartDate,EndDate,IsActive,CustomerId,RoomId")] Booking booking)
+        public IActionResult Edit(int id, [Bind("StartDate,EndDate,IsActive,CustomerId,RoomId")] Models.Booking booking)
         {
             if (id != booking.Id)
             {
@@ -141,7 +141,7 @@ namespace HotelBooking.Controllers
                 return NotFound();
             }
 
-            Booking booking = bookingRepository.Get(id.Value);
+            Models.Booking booking = bookingRepository.Get(id.Value);
             if (booking == null)
             {
                 return NotFound();

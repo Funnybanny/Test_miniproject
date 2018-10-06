@@ -28,9 +28,9 @@ namespace HotelBooking
 
             services.AddDbContext<HotelBookingContext>(opt => opt.UseInMemoryDatabase("HotelBookingDb"));
 
-            services.AddScoped<IRepository<Room>, RoomRepository>();
-            services.AddScoped<IRepository<Customer>, CustomerRepository>();
-            services.AddScoped<IRepository<Booking>, BookingRepository>();
+            services.AddScoped<IRepository<Models.Room>, RoomRepository>();
+            services.AddScoped<IRepository<Models.Customer>, CustomerRepository>();
+            services.AddScoped<IRepository<Models.Booking>, BookingRepository>();
             services.AddScoped<IBookingManager, BookingManager>();
             services.AddScoped<IBookingViewModel, BookingViewModel>();
 
