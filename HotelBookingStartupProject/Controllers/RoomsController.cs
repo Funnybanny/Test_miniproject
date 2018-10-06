@@ -1,37 +1,34 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using HotelBookingStartupProject.Models;
-using HotelBookingStartupProject.Data;
+using HotelBooking.Models;
 
-namespace HotelBookingStartupProject.Controllers
+namespace HotelBooking.Controllers
 {
     public class RoomsController : Controller
     {
-        private readonly HotelBookingContext _context;
+        private IRepository<Room> repository;
 
-        public RoomsController(HotelBookingContext context)
+        public RoomsController(IRepository<Room> repos)
         {
-            _context = context;
+            repository = repos;
         }
 
         // GET: Rooms
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Room.ToListAsync());
+            return View(repository.GetAll().ToList());
         }
 
         // GET: Rooms/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var room = await _context.Room
-                .SingleOrDefaultAsync(m => m.Id == id);
+            Room room = repository.Get(id.Value);
             if (room == null)
             {
                 return NotFound();
@@ -51,26 +48,25 @@ namespace HotelBookingStartupProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Description")] Room room)
+        public IActionResult Create([Bind("Id,Description")] Room room)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(room);
-                await _context.SaveChangesAsync();
+                repository.Add(room);
                 return RedirectToAction(nameof(Index));
             }
             return View(room);
         }
 
         // GET: Rooms/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var room = await _context.Room.SingleOrDefaultAsync(m => m.Id == id);
+            Room room = repository.Get(id.Value);
             if (room == null)
             {
                 return NotFound();
@@ -83,7 +79,7 @@ namespace HotelBookingStartupProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Description")] Room room)
+        public IActionResult Edit(int id, [Bind("Id,Description")] Room room)
         {
             if (id != room.Id)
             {
@@ -94,12 +90,11 @@ namespace HotelBookingStartupProject.Controllers
             {
                 try
                 {
-                    _context.Update(room);
-                    await _context.SaveChangesAsync();
+                    repository.Edit(room);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RoomExists(room.Id))
+                    if (repository.Get(room.Id) == null)
                     {
                         return NotFound();
                     }
@@ -114,15 +109,14 @@ namespace HotelBookingStartupProject.Controllers
         }
 
         // GET: Rooms/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var room = await _context.Room
-                .SingleOrDefaultAsync(m => m.Id == id);
+            Room room = repository.Get(id.Value);
             if (room == null)
             {
                 return NotFound();
@@ -134,17 +128,12 @@ namespace HotelBookingStartupProject.Controllers
         // POST: Rooms/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            var room = await _context.Room.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Room.Remove(room);
-            await _context.SaveChangesAsync();
+            if (id > 0)
+                repository.Remove(id);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RoomExists(int id)
-        {
-            return _context.Room.Any(e => e.Id == id);
-        }
     }
 }

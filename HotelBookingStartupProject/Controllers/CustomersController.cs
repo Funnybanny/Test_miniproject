@@ -1,37 +1,34 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using HotelBookingStartupProject.Models;
-using HotelBookingStartupProject.Data;
+using HotelBooking.Models;
 
-namespace HotelBookingStartupProject.Controllers
+namespace HotelBooking.Controllers
 {
     public class CustomersController : Controller
     {
-        private readonly HotelBookingContext _context;
+        private IRepository<Customer> repository;
 
-        public CustomersController(HotelBookingContext context)
+        public CustomersController(IRepository<Customer> repos)
         {
-            _context = context;
+            repository = repos;
         }
 
         // GET: Customers
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Customer.ToListAsync());
+            return View(repository.GetAll().ToList());
         }
 
         // GET: Customers/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customer
-                .SingleOrDefaultAsync(m => m.Id == id);
+            Customer customer = repository.Get(id.Value);
             if (customer == null)
             {
                 return NotFound();
@@ -51,26 +48,25 @@ namespace HotelBookingStartupProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Email")] Customer customer)
+        public IActionResult Create([Bind("Id,Name,Email")] Customer customer)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(customer);
-                await _context.SaveChangesAsync();
+                repository.Add(customer);
                 return RedirectToAction(nameof(Index));
             }
             return View(customer);
         }
 
         // GET: Customers/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customer.SingleOrDefaultAsync(m => m.Id == id);
+            Customer customer = repository.Get(id.Value);
             if (customer == null)
             {
                 return NotFound();
@@ -83,7 +79,7 @@ namespace HotelBookingStartupProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email")] Customer customer)
+        public IActionResult Edit(int id, [Bind("Id,Name,Email")] Customer customer)
         {
             if (id != customer.Id)
             {
@@ -94,12 +90,11 @@ namespace HotelBookingStartupProject.Controllers
             {
                 try
                 {
-                    _context.Update(customer);
-                    await _context.SaveChangesAsync();
+                    repository.Edit(customer);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CustomerExists(customer.Id))
+                    if (repository.Get(customer.Id) == null)
                     {
                         return NotFound();
                     }
@@ -114,15 +109,14 @@ namespace HotelBookingStartupProject.Controllers
         }
 
         // GET: Customers/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customer
-                .SingleOrDefaultAsync(m => m.Id == id);
+            Customer customer = repository.Get(id.Value);
             if (customer == null)
             {
                 return NotFound();
@@ -134,17 +128,11 @@ namespace HotelBookingStartupProject.Controllers
         // POST: Customers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            var customer = await _context.Customer.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Customer.Remove(customer);
-            await _context.SaveChangesAsync();
+            repository.Remove(id);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CustomerExists(int id)
-        {
-            return _context.Customer.Any(e => e.Id == id);
-        }
     }
 }
