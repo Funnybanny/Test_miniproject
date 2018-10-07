@@ -130,7 +130,8 @@ namespace HotelBooking.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            repository.Remove(id);
+            if (id > 0)
+                repository.Remove(id);
             return RedirectToAction(nameof(Index));
         }
 

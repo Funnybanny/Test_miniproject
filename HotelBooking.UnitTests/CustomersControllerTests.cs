@@ -48,5 +48,52 @@ namespace HotelBooking.UnitTests
             // Assert
             Assert.Equal(2, noOfCustomers);
         }
+
+        [Fact]
+        public void Details_CustomerExists_ReturnsViewResultWithCustomer()
+        {
+            // Act
+            var result = controller.Details(2) as ViewResult;
+            var customer = result.Model as Customer;
+            var customerId = customer.Id;
+
+            // Assert
+            Assert.InRange<int>(customerId, 1, 2);
+        }
+
+        [Fact]
+        public void DeleteConfirmed_WhenIdIsLargerThanZero_RemoveIsCalled()
+        {
+            // Act
+            controller.DeleteConfirmed(1);
+
+            // Assert against the mock object
+            fakeCustomerRepository.Verify(x => x.Remove(It.IsAny<int>()));
+        }
+
+        [Fact]
+        public void DeleteConfirmed_WhenIdIsLessThanOne_RemoveIsNotCalled()
+        {
+            // Act
+            controller.DeleteConfirmed(0);
+
+            // Assert against the mock object
+            fakeCustomerRepository.Verify(x => x.Remove(It.IsAny<int>()), Times.Never());
+        }
+
+        [Fact]
+        public void DeleteConfirmed_WhenIdIsLargerThanTwo_RemoveThrowsException()
+        {
+            // Instruct the fake Remove method to throw an InvalidOperationException, if a customer with id that
+            // does not exist in the repository is passed as a parameter.
+            fakeCustomerRepository.Setup(x =>
+                x.Remove(It.Is<int>(id => id < 1 || id > 2))).Throws<InvalidOperationException>();
+
+            // Assert
+            Assert.Throws<InvalidOperationException>(() => controller.DeleteConfirmed(3));
+
+            // Assert against the mock object
+            fakeCustomerRepository.Verify(x => x.Remove(It.IsAny<int>()));
+        }
     }
 }
