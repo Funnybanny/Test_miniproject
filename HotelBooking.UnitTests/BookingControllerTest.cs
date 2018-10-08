@@ -74,5 +74,15 @@ namespace HotelBooking.UnitTests
             controller = new BookingsController(fakeBookingRepository.Object, fakeRoomRepository.Object, fakeCustomerRepository.Object, bookingmanager, bookingmodel);
         }
 
+        public void Index_ReturnsViewResultWithCorrectListOfBookings()
+        {
+            // Act
+            var result = controller.Index(null) as ViewResult;
+            var bookingsList = result.Model as IList<Booking>;
+            var noOfBookings = bookingsList.Count;
+
+            // Assert
+            Assert.Equal(2, noOfBookings);
+        }
     }
 }
