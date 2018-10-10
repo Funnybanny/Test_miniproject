@@ -74,15 +74,73 @@ namespace HotelBooking.UnitTests
             controller = new BookingsController(fakeBookingRepository.Object, fakeRoomRepository.Object, fakeCustomerRepository.Object, bookingmanager, bookingmodel);
         }
 
+        [Fact]
         public void Index_ReturnsViewResultWithCorrectListOfBookings()
         {
             // Act
-            var result = controller.Index(null) as ViewResult;
-            var bookingsList = result.Model as IList<Booking>;
-            var noOfBookings = bookingsList.Count;
+            //var result = controller.Index(null) as ViewResult;
 
             // Assert
-            Assert.Equal(2, noOfBookings);
+           // Assert.NotNull(result);
+
+            // Act
+            var result = controller.Index(null) as ViewResult;
+            var bookingviewmodel = result.Model as BookingViewModel;
+            var listofbookings = bookingviewmodel.Bookings as IList<Booking>;
+            var count = listofbookings.Count;
+
+            // Assert
+            Assert.Equal(2, count);
         }
+
+        [Fact]
+        public void Details_BookingExists_ReturnsViewResultWithCustomer()
+        {
+            // Act
+            var result = controller.Details(2) as ViewResult;
+            var booking = result.Model as Booking;
+            var bookingId = booking.Id;
+
+            // Assert
+            Assert.InRange<int>(bookingId, 1, 2);
+        }
+
+        [Fact]
+        public void DeleteConfirmed_WhenIdIsLargerThanZero_RemoveIsCalled()
+        {
+            // Act
+            controller.DeleteConfirmed(1);
+
+            // Assert against the mock object
+            fakeBookingRepository.Verify(x => x.Remove(It.IsAny<int>()));
+        }
+
+        [Fact]
+        public void DeleteConfirmed_WhenIdIsLessThanOne_RemoveIsNotCalled()
+        {
+            // Act
+            controller.DeleteConfirmed(0);
+
+            // Assert against the mock object
+            fakeBookingRepository.Verify(x => x.Remove(It.IsAny<int>()), Times.Never());
+        }
+
+        [Fact]
+        public void DeleteConfirmed_WhenIdIsLargerThanTwo_RemoveThrowsException()
+        {
+            // Instruct the fake Remove method to throw an InvalidOperationException, if a room id that
+            // does not exist in the repository is passed as a parameter. This behavior corresponds to
+            // the behavior of the real repoository's Remove method.
+            fakeBookingRepository.Setup(x =>
+                    x.Remove(It.Is<int>(id => id < 1 || id > 2))).Throws<InvalidOperationException>();
+
+            // Assert
+            Assert.Throws<InvalidOperationException>(() => controller.DeleteConfirmed(3));
+
+            // Assert against the mock object
+            fakeBookingRepository.Verify(x => x.Remove(It.IsAny<int>()));
+        }
+
+
     }
 }
