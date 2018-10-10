@@ -61,6 +61,17 @@ namespace HotelBooking.UnitTests
             Assert.InRange<int>(customerId, 1, 2);
         }
 
+        [Theory]
+        [ClassData(typeof(CustomerDataGenerator))]
+        public void Create_ReturnsViewResultWithCustomer(int id, string email, string name )
+        {
+            // Act
+            var customer = new Customer() {Id = id, Email = email, Name = name};
+            var result = controller.Create(customer) as ViewResult;
+            // Assert against the mock object
+            fakeCustomerRepository.Verify(x => x.Add(It.Is<Customer>(z => z == customer)), Times.Once);
+        }
+
         [Fact]
         public void DeleteConfirmed_WhenIdIsLargerThanZero_RemoveIsCalled()
         {
