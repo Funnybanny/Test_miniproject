@@ -7,17 +7,20 @@ using System.Text;
 namespace HotelBooking.UnitTests
 {
     class BookingDataGenerator :IEnumerable<Booking>
+
     {
-        private readonly List<Booking> _customers = new List<Booking>
+        private readonly List<Booking> _bookings = new List<Booking>
         {
-            new Booking {Id=1, StartDate=DateTime.Now, EndDate=DateTime.Now, IsActive=true, CustomerId=1, RoomId=1, Customer=customers[0], Room=rooms[0]},
-            new Booking {Id=2, StartDate=DateTime.Now, EndDate=DateTime.Now, IsActive=true, CustomerId=2, RoomId=2, Customer=customers[1], Room=rooms[1]}
+            new Booking {Id=1, StartDate=DateTime.Now, EndDate=DateTime.Now, IsActive=true, CustomerId=1, RoomId=1,
+                Customer =new Customer{  Id=1, Email = "joe@outlook.com", Name = "Joe"}, Room=new Room{  Id=1, Description="A"} },
+            new Booking {Id=2, StartDate=DateTime.Now, EndDate=DateTime.Now, IsActive=true, CustomerId=2, RoomId=2,
+                Customer =new Customer{  Id=2, Email = "bill@outlook.com", Name = "Billy" }, Room=new Room{  Id=2, Description="B"} }
         };
 
 
         public IEnumerator<Booking> GetEnumerator()
         {
-            return _customers.GetEnumerator();
+            return _bookings.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
