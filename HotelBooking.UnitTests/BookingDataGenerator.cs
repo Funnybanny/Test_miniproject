@@ -6,19 +6,19 @@ using System.Text;
 
 namespace HotelBooking.UnitTests
 {
-    class BookingDataGenerator :IEnumerable<Booking>
+    class BookingDataGenerator :IEnumerable<object[]>
 
     {
-        private readonly List<Booking> _bookings = new List<Booking>
+        private readonly List<object[]> _bookings = new List<object[]>
         {
-            new Booking {Id=1, StartDate=DateTime.Now, EndDate=DateTime.Now, IsActive=true, CustomerId=1, RoomId=1,
-                Customer =new Customer{  Id=1, Email = "joe@outlook.com", Name = "Joe"}, Room=new Room{  Id=1, Description="A"} },
-            new Booking {Id=2, StartDate=DateTime.Now, EndDate=DateTime.Now, IsActive=true, CustomerId=2, RoomId=2,
-                Customer =new Customer{  Id=2, Email = "bill@outlook.com", Name = "Billy" }, Room=new Room{  Id=2, Description="B"} }
+            new object[] {1, DateTime.Now, DateTime.Now, true, 1, 1,
+                new Customer{  Id=1, Email = "joe@outlook.com", Name = "Joe"}, new Room{  Id=1, Description="A"} },
+            new object[] {2, DateTime.Now, DateTime.Now, true, 2, 2,
+                new Customer{  Id=2, Email = "bill@outlook.com", Name = "Billy" }, new Room{  Id=2, Description="B"} }
         };
 
 
-        public IEnumerator<Booking> GetEnumerator()
+        public IEnumerator<object[]> GetEnumerator()
         {
             return _bookings.GetEnumerator();
         }

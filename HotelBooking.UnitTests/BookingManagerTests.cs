@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using HotelBooking.BusinessLogic;
+using HotelBooking.Controllers;
 using HotelBooking.Models;
 using HotelBooking.UnitTests.Fakes;
+using HotelBookingStartupProject.Models;
 using Moq;
 using Xunit;
 
@@ -11,8 +13,9 @@ namespace HotelBooking.UnitTests
     public class BookingManagerTests
     {
         private IBookingManager bookingManager;
-        private Mock<IRepository<Booking>> fakeBookingRepository;
+        private Mock<IBookingManager> fakeBookingManager;
         private Mock<IRepository<Room>> fakeRoomRepository;
+        private Mock<IRepository<Booking>> fakeBookingRepository;
 
         public BookingManagerTests(){
 
@@ -34,26 +37,21 @@ namespace HotelBooking.UnitTests
 
             DateTime start = DateTime.Today.AddDays(10);
             DateTime end = DateTime.Today.AddDays(20);
-            fakeBookingRepository.Setup(x => x.GetAll()).Returns(bookings);
-            fakeRoomRepository.Setup(x => x.GetAll()).Returns(rooms);
 
-            fakeBookingRepository.Setup(x => x.Get(It.Is<int>(id => id > 0 && id < 3))).Returns(bookings[1]);
-            fakeRoomRepository.Setup(x => x.Get(It.Is<int>(id => id > 0 && id < 3))).Returns(rooms[1]);
+            fakeBookingManager.Setup(x => x.CreateBooking(It.Is<Booking>(b => b.Id == 1))).Returns(true);
 
             bookingManager = new BookingManager(fakeBookingRepository.Object, fakeRoomRepository.Object);
         }
 
-        public IEnumerable<object[]> GetBookings()
-        {
-            yield return new object[] { 1, DateTime.Now, DateTime.Now, true, 1, 1, customers[0], rooms[0] };
-            yield return new object[] { 2, DateTime.Now, DateTime.Now, true, 2, 2, customers[1], rooms[1] }
-        }
-
         [Theory]
-        []
-        public void CreateBookingTest()
+        [ClassData(typeof(BookingDataGenerator))]
+        public void CreateBookingTest(int Id, DateTime StartDate, DateTime EndDate, bool IsActive,int CustomerId, int RoomId, Customer Customer, Room Room)
         {
-            bookingManager
+            var book = new Booking { Id = Id, StartDate = StartDate, EndDate = EndDate, IsActive = IsActive, CustomerId = CustomerId, RoomId = RoomId, Customer = Customer, Room = Room };
+            bookingManager.CreateBooking(book);
+            fakeBookingManager.Verify(x => x.CreateBooking(book));
+            
+
         }
 
         [Fact]
