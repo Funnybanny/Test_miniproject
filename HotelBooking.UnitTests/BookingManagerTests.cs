@@ -35,8 +35,18 @@ namespace HotelBooking.UnitTests
                 new Booking {Id=2, StartDate=DateTime.Now, EndDate=DateTime.Now, IsActive=true, CustomerId=2, RoomId=2, Customer=customers[1], Room=rooms[1]}
             };
 
+            fakeBookingRepository = new Mock<IRepository<Booking>>();
+            fakeRoomRepository = new Mock<IRepository<Room>>(); 
+
+
             DateTime start = DateTime.Today.AddDays(10);
             DateTime end = DateTime.Today.AddDays(20);
+
+            fakeBookingRepository.Setup(x => x.GetAll()).Returns(bookings);
+            fakeRoomRepository.Setup(x => x.GetAll()).Returns(rooms);
+
+            fakeBookingRepository.Setup(x => x.Get(It.Is<int>(id => id > 0 && id < 3))).Returns(bookings[1]);
+            fakeRoomRepository.Setup(x => x.Get(It.Is<int>(id => id > 0 && id < 3))).Returns(rooms[1]);
 
             fakeBookingManager.Setup(x => x.CreateBooking(It.Is<Booking>(b => b.Id == 1))).Returns(true);
 
