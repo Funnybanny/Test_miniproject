@@ -6,17 +6,17 @@ using HotelBooking.Models;
 
 namespace HotelBooking.UnitTests
 {
-    public class CustomerDataGenerator : IEnumerable<Customer>
+    public class CustomerDataGenerator : IEnumerable<object[]>
     {
 
-        private readonly List<Customer> _customers = new List<Customer>
+        private readonly List<object[]> _customers = new List<object[]>
         {
-            new Customer { Id=1, Email = "joe@outlook.com", Name = "Joe"},
-            new Customer { Id=2, Email = "bill@outlook.com", Name = "Billy" },
+            new object[] { 3, "joe@outlook.com", "Joe"},
+            new object[] { 4, "bill@outlook.com", "Billy" },
         };
 
 
-        public IEnumerator<Customer> GetEnumerator()
+        public IEnumerator<object[]> GetEnumerator()
         {
             return _customers.GetEnumerator();
         }
