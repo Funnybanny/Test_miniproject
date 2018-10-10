@@ -13,7 +13,6 @@ namespace HotelBooking.UnitTests
     public class BookingManagerTests
     {
         private IBookingManager bookingManager;
-        private Mock<IBookingManager> fakeBookingManager;
         private Mock<IRepository<Room>> fakeRoomRepository;
         private Mock<IRepository<Booking>> fakeBookingRepository;
 
@@ -48,8 +47,6 @@ namespace HotelBooking.UnitTests
             fakeBookingRepository.Setup(x => x.Get(It.Is<int>(id => id > 0 && id < 3))).Returns(bookings[1]);
             fakeRoomRepository.Setup(x => x.Get(It.Is<int>(id => id > 0 && id < 3))).Returns(rooms[1]);
 
-            fakeBookingManager.Setup(x => x.CreateBooking(It.Is<Booking>(b => b.Id == 1))).Returns(true);
-
             bookingManager = new BookingManager(fakeBookingRepository.Object, fakeRoomRepository.Object);
         }
 
@@ -58,9 +55,9 @@ namespace HotelBooking.UnitTests
         public void CreateBookingTest(int Id, DateTime StartDate, DateTime EndDate, bool IsActive,int CustomerId, int RoomId, Customer Customer, Room Room)
         {
             var book = new Booking { Id = Id, StartDate = StartDate, EndDate = EndDate, IsActive = IsActive, CustomerId = CustomerId, RoomId = RoomId, Customer = Customer, Room = Room };
-            bookingManager.CreateBooking(book);
-            fakeBookingManager.Verify(x => x.CreateBooking(book));
-            
+            bool result = bookingManager.CreateBooking(book);
+
+            fakeBookingRepository.Verify(x => x.Add(It.Is<Booking>(z => z == book)), Times.Once);
 
         }
 
@@ -81,5 +78,12 @@ namespace HotelBooking.UnitTests
             // Assert
             Assert.NotEqual(-1, roomId);
         }
+
+        /*[Theory]
+        [MemberData(typeof())]
+        public void GetFullyOccupiedDatesTest(DateTime start, DateTime end)
+        {
+
+        }*/
     }
 }

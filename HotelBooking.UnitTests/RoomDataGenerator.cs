@@ -6,16 +6,16 @@ using System.Text;
 
 namespace HotelBooking.UnitTests
 {
-    public class RoomDataGenerator: IEnumerable<Room>
+    public class RoomDataGenerator: IEnumerable<object[]>
     {
-        private readonly List<Room> _rooms = new List<Room>
+        private readonly List<object[]> _rooms = new List<object[]>
         {
-            new Room { Id=1, Description="A" },
-            new Room { Id=2, Description="B" },
+            new object[] { 1, "A" },
+            new object[] { 2, "B" },
         };
 
 
-        public IEnumerator<Room> GetEnumerator()
+        public IEnumerator<object[]> GetEnumerator()
         {
             return _rooms.GetEnumerator();
         }
