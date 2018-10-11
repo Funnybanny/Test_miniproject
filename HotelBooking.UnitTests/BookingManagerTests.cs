@@ -80,6 +80,12 @@ namespace HotelBooking.UnitTests
             Assert.NotEqual(-1, roomId);
         }
 
+        [Fact]
+        public void GetFullyOccupiedDates_ArgumentException()
+        {
+            Assert.Throws<ArgumentException>(() => bookingManager.GetFullyOccupiedDates(DateTime.Today.AddDays(1), DateTime.Today));
+        }
+
         /*[Theory]
         [ClassData(typeof(BookingDataGenerator))]
         public void GetFullyOccupiedDatesTest(DateTime start, DateTime end)

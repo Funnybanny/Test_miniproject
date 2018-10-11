@@ -67,7 +67,7 @@ namespace HotelBooking.UnitTests
         {
             // Act
             var customer = new Customer() {Id = id, Email = email, Name = name};
-            var result = controller.Create(customer) as ViewResult;
+            controller.Create(customer);
             // Assert against the mock object
             fakeCustomerRepository.Verify(x => x.Add(It.Is<Customer>(z => z == customer)), Times.Once);
         }
