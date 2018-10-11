@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using HotelBooking.Controllers;
 using HotelBooking.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
@@ -49,6 +50,7 @@ namespace HotelBooking.UnitTests
             Assert.Equal(2, noOfCustomers);
         }
 
+        //Could Use inline data
         [Fact]
         public void Details_CustomerExists_ReturnsViewResultWithCustomer()
         {
@@ -59,6 +61,16 @@ namespace HotelBooking.UnitTests
 
             // Assert
             Assert.InRange<int>(customerId, 1, 2);
+        }
+
+        [Fact]
+        public void Details_CustomerDoesNotExist_ReturnsStatusCode404()
+        {
+            // Act
+            var result = controller.Details(3) as NotFoundResult;
+
+            // Assert
+            Assert.Equal(result.StatusCode, StatusCodes.Status404NotFound);
         }
 
         [Theory]
