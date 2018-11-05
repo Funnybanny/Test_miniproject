@@ -59,7 +59,15 @@ namespace HotelBooking.UnitTests
             bool result = bookingManager.CreateBooking(book);
 
             fakeBookingRepository.Verify(x => x.Add(It.Is<Booking>(z => z == book)), Times.Once);
+        }
 
+        [Theory]
+        [ClassData(typeof(BookingDataGenerator))]
+        public void CreateBookingTest_ThrowsArgumentException(int Id, DateTime StartDate, DateTime EndDate, bool IsActive, int CustomerId, int RoomId, Customer Customer, Room Room)
+        {
+            var book = new Booking { Id = Id, StartDate = StartDate, EndDate = EndDate, IsActive = IsActive, CustomerId = CustomerId, RoomId = RoomId, Customer = Customer, Room = Room };
+            Exception ex = Assert.Throws<ArgumentException>(() => bookingManager.CreateBooking(book));
+            Assert.Equal(String.Format("The start date cannot be in the past or later than the end date."), ex.Message);
         }
 
         [Fact]
