@@ -78,27 +78,32 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CreateBookingFeature.feature</DependentUpon>
     </Compile>
+    <Compile Include="CreateBookingFeatureSteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpecFlowFeatureAA.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SpecFlowFeatureAA.feature</DependentUpon>
     </Compile>
+    <Compile Include="SpecFlowFeatureAASteps.cs" />
     <Compile Include="SpecFlowFeatureBA.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SpecFlowFeatureBA.feature</DependentUpon>
     </Compile>
+    <Compile Include="SpecFlowFeatureBASteps.cs" />
     <Compile Include="SpecFlowFeatureOA.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SpecFlowFeatureOA.feature</DependentUpon>
     </Compile>
+    <Compile Include="SpecFlowFeatureOASteps.cs" />
     <Compile Include="SpecFlowFeatureOO.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SpecFlowFeatureOO.feature</DependentUpon>
     </Compile>
+    <Compile Include="SpecFlowFeatureOOSteps.cs" />
     <Compile Include="SpecFlowFeatureP.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -109,6 +114,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SpecFlowFeaturesBO.feature</DependentUpon>
     </Compile>
+    <Compile Include="SpecFlowFeaturesBOSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
