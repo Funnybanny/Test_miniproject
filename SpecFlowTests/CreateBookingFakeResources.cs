@@ -9,20 +9,18 @@ using Moq;
 
 namespace SpecFlowTests
 {
-    class GlobalCreateBookingVariables
-    {
-        public static DateTime StartDate;
-        public static DateTime EndDate;
-        public static bool result;
-    }
-
 
     class CreateBookingFakeResources
     {
         public IBookingManager bookingManager;
         private Mock<IRepository<Room>> fakeRoomRepository;
         private Mock<IRepository<Booking>> fakeBookingRepository;
-        
+
+        public DateTime StartDate;
+        public DateTime EndDate;
+        public bool result;
+        public ArgumentException ex;
+
 
         public CreateBookingFakeResources()
         {
