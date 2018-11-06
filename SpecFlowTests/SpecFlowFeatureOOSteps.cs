@@ -6,16 +6,18 @@ namespace SpecFlowTests
     [Binding]
     public class SpecFlowFeatureOOSteps
     {
+        private CreateBookingFakeResources fakeResources = new CreateBookingFakeResources();
+
         [Given(@"Start date is during occupancy")]
         public void GivenStartDateIsDuringOccupancy()
         {
-            ScenarioContext.Current.Pending();
+            GlobalCreateBookingVariables.StartDate = DateTime.Today.AddDays(10);
         }
         
         [Given(@"End date is during occupancy")]
         public void GivenEndDateIsDuringOccupancy()
         {
-            ScenarioContext.Current.Pending();
+            GlobalCreateBookingVariables.EndDate = DateTime.Today.AddDays(20);
         }
     }
 }

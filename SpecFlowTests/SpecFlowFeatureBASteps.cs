@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TechTalk.SpecFlow;
 
 namespace SpecFlowTests
@@ -6,10 +7,12 @@ namespace SpecFlowTests
     [Binding]
     public class SpecFlowFeatureBASteps
     {
+        private CreateBookingFakeResources fakeResources = new CreateBookingFakeResources();
+
         [Then(@"Booking is invalid")]
         public void ThenBookingIsInvalid()
         {
-            ScenarioContext.Current.Pending();
+            Assert.IsFalse(GlobalCreateBookingVariables.result);
         }
     }
 }
