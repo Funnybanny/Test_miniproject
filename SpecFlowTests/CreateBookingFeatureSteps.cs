@@ -2,6 +2,8 @@
 using HotelBooking.Models;
 using System;
 using TechTalk.SpecFlow;
+using Moq;
+using System.Collections.Generic;
 
 namespace SpecFlowTests
 {
