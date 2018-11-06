@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using HotelBooking.BusinessLogic;
 using HotelBooking.Controllers;
 using HotelBooking.Models;
+using HotelBooking.UnitTests.DataGenerator;
 using HotelBooking.UnitTests.Fakes;
 using HotelBookingStartupProject.Models;
 using Moq;
@@ -49,10 +50,12 @@ namespace HotelBooking.UnitTests
             fakeRoomRepository.Setup(x => x.Get(It.Is<int>(id => id > 0 && id < 3))).Returns(rooms[1]);
 
             bookingManager = new BookingManager(fakeBookingRepository.Object, fakeRoomRepository.Object);
+
+            bookingManager.CreateBooking(bookings[0]);
         }
 
         [Theory]
-        [ClassData(typeof(BookingDataGenerator))]
+        [ClassData(typeof(BookingSuccesfullDataGenerator))]
         public void CreateBookingTest(int Id, DateTime StartDate, DateTime EndDate, bool IsActive,int CustomerId, int RoomId, Customer Customer, Room Room)
         {
             var book = new Booking { Id = Id, StartDate = StartDate, EndDate = EndDate, IsActive = IsActive, CustomerId = CustomerId, RoomId = RoomId, Customer = Customer, Room = Room };
@@ -62,7 +65,7 @@ namespace HotelBooking.UnitTests
         }
 
         [Theory]
-        [ClassData(typeof(BookingDataGenerator))]
+        [ClassData(typeof(BookingSuccesfullDataGenerator))]
         public void CreateBookingTest_ThrowsArgumentException(int Id, DateTime StartDate, DateTime EndDate, bool IsActive, int CustomerId, int RoomId, Customer Customer, Room Room)
         {
             var book = new Booking { Id = Id, StartDate = StartDate, EndDate = EndDate, IsActive = IsActive, CustomerId = CustomerId, RoomId = RoomId, Customer = Customer, Room = Room };

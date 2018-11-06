@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="SpecFlow.xUnit" Version="2.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\HotelBooking.Models\HotelBooking.Models.csproj" />
   </ItemGroup>
 
