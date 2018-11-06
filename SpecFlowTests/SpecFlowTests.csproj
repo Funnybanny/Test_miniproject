@@ -79,6 +79,36 @@
       <DependentUpon>CreateBookingFeature.feature</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpecFlowFeatureAA.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SpecFlowFeatureAA.feature</DependentUpon>
+    </Compile>
+    <Compile Include="SpecFlowFeatureBA.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SpecFlowFeatureBA.feature</DependentUpon>
+    </Compile>
+    <Compile Include="SpecFlowFeatureOA.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SpecFlowFeatureOA.feature</DependentUpon>
+    </Compile>
+    <Compile Include="SpecFlowFeatureOO.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SpecFlowFeatureOO.feature</DependentUpon>
+    </Compile>
+    <Compile Include="SpecFlowFeatureP.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SpecFlowFeatureP.feature</DependentUpon>
+    </Compile>
+    <Compile Include="SpecFlowFeaturesBO.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SpecFlowFeaturesBO.feature</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -87,6 +117,30 @@
       <LastGenOutput>CreateBookingFeature.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
+    <None Include="SpecFlowFeatureAA.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>SpecFlowFeatureAA.feature.cs</LastGenOutput>
+    </None>
+    <None Include="SpecFlowFeatureBA.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>SpecFlowFeatureBA.feature.cs</LastGenOutput>
+    </None>
+    <None Include="SpecFlowFeatureOA.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>SpecFlowFeatureOA.feature.cs</LastGenOutput>
+    </None>
+    <None Include="SpecFlowFeatureOO.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>SpecFlowFeatureOO.feature.cs</LastGenOutput>
+    </None>
+    <None Include="SpecFlowFeatureP.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>SpecFlowFeatureP.feature.cs</LastGenOutput>
+    </None>
+    <None Include="SpecFlowFeaturesBO.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>SpecFlowFeaturesBO.feature.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />

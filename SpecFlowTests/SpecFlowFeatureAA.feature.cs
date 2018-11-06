@@ -17,17 +17,17 @@ namespace SpecFlowTests
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "2.4.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class CreateBookingFeatureFeature : Xunit.IClassFixture<CreateBookingFeatureFeature.FixtureData>, System.IDisposable
+    public partial class SpecFlowFeatureAAFeature : Xunit.IClassFixture<SpecFlowFeatureAAFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "CreateBookingFeature.feature"
+#line 1 "SpecFlowFeatureAA.feature"
 #line hidden
         
-        public CreateBookingFeatureFeature(CreateBookingFeatureFeature.FixtureData fixtureData, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public SpecFlowFeatureAAFeature(SpecFlowFeatureAAFeature.FixtureData fixtureData, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -36,7 +36,7 @@ namespace SpecFlowTests
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "CreateBookingFeature", "\tThis feature tries to create a booking for a given period of time.", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "SpecFlowFeatureAA", "\tThis feature tries to create a booking for a given period of time.", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -76,19 +76,19 @@ namespace SpecFlowTests
             this.ScenarioTearDown();
         }
         
-        [Xunit.FactAttribute(DisplayName="Start and end dates are before the room is occupied")]
-        [Xunit.TraitAttribute("FeatureTitle", "CreateBookingFeature")]
-        [Xunit.TraitAttribute("Description", "Start and end dates are before the room is occupied")]
-        public virtual void StartAndEndDatesAreBeforeTheRoomIsOccupied()
+        [Xunit.FactAttribute(DisplayName="Start and end dates are after the room is occupied")]
+        [Xunit.TraitAttribute("FeatureTitle", "SpecFlowFeatureAA")]
+        [Xunit.TraitAttribute("Description", "Start and end dates are after the room is occupied")]
+        public virtual void StartAndEndDatesAreAfterTheRoomIsOccupied()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Start and end dates are before the room is occupied", null, ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Start and end dates are after the room is occupied", null, ((string[])(null)));
 #line 4
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 5
- testRunner.Given("Start date is before occupancy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("Start date is after occupancy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 6
- testRunner.And("End date is before occupancy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("End date is after occupancy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 7
  testRunner.When("Booking is created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 8
@@ -104,12 +104,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                CreateBookingFeatureFeature.FeatureSetup();
+                SpecFlowFeatureAAFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                CreateBookingFeatureFeature.FeatureTearDown();
+                SpecFlowFeatureAAFeature.FeatureTearDown();
             }
         }
     }
