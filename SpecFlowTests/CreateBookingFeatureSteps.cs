@@ -47,18 +47,6 @@ namespace SpecFlowTests
             fakeResources.StartDate = DateTime.Today.AddDays(20);
         }
         
-        [Given(@"Start date is during occupancy")]
-        public void GivenStartDateIsDuringOccupancy()
-        {
-            fakeResources.StartDate = DateTime.Today.AddDays(10);
-        }
-        
-        [Given(@"End date is during occupancy")]
-        public void GivenEndDateIsDuringOccupancy()
-        {
-            fakeResources.EndDate = DateTime.Today.AddDays(20);
-        }
-        
         [Given(@"End date is at the start of occupancy")]
         public void GivenEndDateIsAtTheStartOfOccupancy()
         {

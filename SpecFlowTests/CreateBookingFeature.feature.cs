@@ -181,22 +181,64 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.FactAttribute(DisplayName="Start and end dates are during when the room is occupied")]
+        [Xunit.FactAttribute(DisplayName="Start date is at the start and end date is at the end of occupancy")]
         [Xunit.TraitAttribute("FeatureTitle", "CreateBookingFeature")]
-        [Xunit.TraitAttribute("Description", "Start and end dates are during when the room is occupied")]
-        public virtual void StartAndEndDatesAreDuringWhenTheRoomIsOccupied()
+        [Xunit.TraitAttribute("Description", "Start date is at the start and end date is at the end of occupancy")]
+        public virtual void StartDateIsAtTheStartAndEndDateIsAtTheEndOfOccupancy()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Start and end dates are during when the room is occupied", null, ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Start date is at the start and end date is at the end of occupancy", null, ((string[])(null)));
 #line 34
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 35
- testRunner.Given("Start date is during occupancy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("Start date is at the start of occupancy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 36
- testRunner.And("End date is during occupancy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("End date is at the end of occupancy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 37
  testRunner.When("Booking is created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 38
+ testRunner.Then("Booking is invalid", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute(DisplayName="Start date is at the start and end date is at the start of occupancy")]
+        [Xunit.TraitAttribute("FeatureTitle", "CreateBookingFeature")]
+        [Xunit.TraitAttribute("Description", "Start date is at the start and end date is at the start of occupancy")]
+        public virtual void StartDateIsAtTheStartAndEndDateIsAtTheStartOfOccupancy()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Start date is at the start and end date is at the start of occupancy", null, ((string[])(null)));
+#line 40
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 41
+ testRunner.Given("Start date is at the start of occupancy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 42
+ testRunner.And("End date is at the start of occupancy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 43
+ testRunner.When("Booking is created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 44
+ testRunner.Then("Booking is invalid", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute(DisplayName="Start date is at the end and end date is at the end of occupancy")]
+        [Xunit.TraitAttribute("FeatureTitle", "CreateBookingFeature")]
+        [Xunit.TraitAttribute("Description", "Start date is at the end and end date is at the end of occupancy")]
+        public virtual void StartDateIsAtTheEndAndEndDateIsAtTheEndOfOccupancy()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Start date is at the end and end date is at the end of occupancy", null, ((string[])(null)));
+#line 46
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 47
+ testRunner.Given("Start date is at the end of occupancy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 48
+ testRunner.And("End date is at the end of occupancy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 49
+ testRunner.When("Booking is created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 50
  testRunner.Then("Booking is invalid", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -208,16 +250,16 @@ this.ScenarioInitialize(scenarioInfo);
         public virtual void StartDateIsBeforeAndEndDateIsAtTheStartOfOccupancy()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Start date is before and end date is at the start of occupancy", null, ((string[])(null)));
-#line 40
+#line 52
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 41
+#line 53
  testRunner.Given("Start date is before occupancy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 42
+#line 54
  testRunner.And("End date is at the start of occupancy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 43
+#line 55
  testRunner.When("Booking is created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 44
+#line 56
  testRunner.Then("Booking is invalid", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -229,16 +271,16 @@ this.ScenarioInitialize(scenarioInfo);
         public virtual void StartDateIsBeforeAndEndDateIsAtTheEndOfOccupancy()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Start date is before and end date is at the end of occupancy", null, ((string[])(null)));
-#line 46
+#line 58
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 47
+#line 59
  testRunner.Given("Start date is before occupancy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 48
+#line 60
  testRunner.And("End date is at the end of occupancy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 49
+#line 61
  testRunner.When("Booking is created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 50
+#line 62
  testRunner.Then("Booking is invalid", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -250,14 +292,14 @@ this.ScenarioInitialize(scenarioInfo);
         public virtual void StartDateIsInThePast()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Start date is in the past", null, ((string[])(null)));
-#line 52
+#line 64
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 53
+#line 65
  testRunner.Given("Start date is in Past", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 54
+#line 66
  testRunner.When("Booking is created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 55
+#line 67
  testRunner.Then("Booking Throws Exception", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
