@@ -51,14 +51,29 @@ namespace HotelBooking.UnitTests.Whitebox
             {
                 new Booking
                 {
-                    Id = 1, StartDate = DateTime.Today.AddDays(2), EndDate = DateTime.Today.AddDays(3), IsActive = true, CustomerId = 1,
+                    Id = 1, StartDate = DateTime.Today.AddDays(2), EndDate = DateTime.Today.AddDays(3), IsActive = true,
+                    CustomerId = 1,
                     RoomId = 1, Customer = customers[0], Room = rooms[0]
                 },
                 new Booking
                 {
-                    Id = 2, StartDate = DateTime.Today.AddDays(1), EndDate = DateTime.Today.AddDays(5), IsActive = true, CustomerId = 2,
+                    Id = 2, StartDate = DateTime.Today.AddDays(1), EndDate = DateTime.Today.AddDays(5), IsActive = true,
+                    CustomerId = 2,
                     RoomId = 2, Customer = customers[1], Room = rooms[1]
+                },
+                new Booking
+                {
+                    Id = 3, StartDate = DateTime.Today.AddDays(10), EndDate = DateTime.Today.AddDays(13),
+                    IsActive = true, CustomerId = 2,
+                    RoomId = 2, Customer = customers[1], Room = rooms[1]
+                },
+                new Booking
+                {
+                    Id = 4, StartDate = DateTime.Today.AddDays(10), EndDate = DateTime.Today.AddDays(13),
+                    IsActive = true, CustomerId = 1,
+                    RoomId = 1, Customer = customers[0], Room = rooms[0]
                 }
+
             };
 
             var roomsLoop = new List<Room>
@@ -93,7 +108,7 @@ namespace HotelBooking.UnitTests.Whitebox
             fakeBookingRepository.Setup(x => x.Get(It.Is<int>(id => id > 0 && id < 3))).Returns(bookings[1]);
             fakeCustomerRepository.Setup(x => x.Get(It.Is<int>(id => id > 0 && id < 3))).Returns(customers[1]);
             fakeRoomRepository.Setup(x => x.Get(It.Is<int>(id => id > 0 && id < 3))).Returns(rooms[1]);
-            
+
 
             // Integers from 1 to 2 (using a range)
             //roomRepository.Setup(x => x.Get(It.IsInRange<int>(1, 2, Range.Inclusive))).Returns(rooms[1]);
@@ -135,7 +150,8 @@ namespace HotelBooking.UnitTests.Whitebox
         [Fact]
         public void Edge2()
         {
-            Exception ex = Assert.Throws<ArgumentException>(() => bookingmanager.FindAvailableRoom(DateTime.Today.AddDays(-1), DateTime.Today));
+            Exception ex = Assert.Throws<ArgumentException>(() =>
+                bookingmanager.FindAvailableRoom(DateTime.Today.AddDays(-1), DateTime.Today));
             Assert.Equal(String.Format("The start date cannot be in the past or later than the end date."), ex.Message);
         }
 
@@ -157,8 +173,102 @@ namespace HotelBooking.UnitTests.Whitebox
         [Fact]
         public void Loop0()
         {
-            var returnValue = bookingmanagerLoop.FindAvailableRoom(DateTime.Today.AddDays(2), DateTime.Today.AddDays(3));
+            var returnValue =
+                bookingmanagerLoop.FindAvailableRoom(DateTime.Today.AddDays(2), DateTime.Today.AddDays(3));
             Assert.Equal(-1, returnValue);
+        }
+
+        /*  Condition Coverage
+         * F N F N
+         * F stands for False
+         * N stands for does not matter
+         *
+         * Start date has to be after occupied start date
+         * Start date has to be Before End date
+         * Expected Result = false
+         */
+        [Fact]
+        public void ConditionFNFN()
+        {
+            var startDate = DateTime.Today.AddDays(11);
+            var endDate = DateTime.Today.AddDays(12);
+            var returnValue = bookingmanager.FindAvailableRoom(startDate, endDate);
+            Assert.Equal(-1, returnValue);
+        }
+
+                /*  Condition Coverage
+         * T F F N
+         * F stands for False
+         * N stands for does not matter
+         *
+         * Start date has to be before occupied start date
+         * End date has to be after Occupied start date
+         * Start date has to be Before End date
+         * Expected Result = false
+         */
+        [Fact]
+        public void ConditionTFFN()
+        {
+            var startDate = DateTime.Today.AddDays(9);
+            var endDate = DateTime.Today.AddDays(11);
+            var returnValue = bookingmanager.FindAvailableRoom(startDate, endDate);
+            Assert.Equal(-1, returnValue);
+        }
+
+        /*  Condition Coverage
+         * F N T F
+         * F stands for False
+         * N stands for does not matter
+         *
+         * Start date has to be after occupied start date
+         * Start date has to be after occupied end date
+         * End date has to be before occupied end date
+         * Expected Result = false
+         */
+        [Fact]
+        public void ConditionFNTF()
+        {
+            var startDate = DateTime.Today.AddDays(14);
+            var endDate = DateTime.Today.AddDays(12);
+            Exception ex = Assert.Throws<ArgumentException>(() => bookingmanager.FindAvailableRoom(startDate, endDate));
+            Assert.Equal(String.Format("The start date cannot be in the past or later than the end date."), ex.Message);
+        }
+
+                /*  Condition Coverage
+         * T T N N
+         * F stands for False
+         * N stands for does not matter
+         *
+         * Start date has to be before occupied start date
+         * end date has to be before occupied start date
+         * Expected Result = true
+         */
+        [Fact]
+        public void ConditionTTNN()
+        {
+            var startDate = DateTime.Today.AddDays(8);
+            var endDate = DateTime.Today.AddDays(9);
+            var returnValue = bookingmanager.FindAvailableRoom(startDate, endDate);
+            Assert.Equal(1, returnValue);
+        }
+
+        /*  Condition Coverage
+         * F N T T
+         * F stands for False
+         * N stands for does not matter
+         *
+         * Start date has to be after occupied start date
+         * Start date has to be after occupied end date
+         * end date has to be after occupied end date
+         * Expected Result = true
+         */
+        [Fact]
+        public void ConditionFNTT()
+        {
+            var startDate = DateTime.Today.AddDays(14);
+            var endDate = DateTime.Today.AddDays(15);
+            var returnValue = bookingmanager.FindAvailableRoom(startDate, endDate);
+            Assert.Equal(1, returnValue);
         }
     }
 }
