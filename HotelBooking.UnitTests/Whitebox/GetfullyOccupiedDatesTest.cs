@@ -9,10 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
 
-
 namespace HotelBooking.UnitTests.Whitebox
 {
-    public class FindAvailableRoomTest
+    public class GetfullyOccupiedDatesTest
     {
         private BookingsController controller;
         private Mock<IRepository<Booking>> fakeBookingRepository;
@@ -21,20 +20,11 @@ namespace HotelBooking.UnitTests.Whitebox
         private BookingManager bookingmanager;
         private BookingViewModel bookingmodel;
 
-        private BookingsController controllerLoop;
-        private BookingManager bookingmanagerLoop;
-        private BookingViewModel bookingmodelLoop;
-        private Mock<IRepository<Booking>> fakeBookingRepositoryLoop;
-        private Mock<IRepository<Room>> fakeRoomRepositoryLoop;
-
-        public FindAvailableRoomTest()
+        public GetfullyOccupiedDatesTest()
         {
             fakeBookingRepository = new Mock<IRepository<Booking>>();
             fakeCustomerRepository = new Mock<IRepository<Customer>>();
             fakeRoomRepository = new Mock<IRepository<Room>>();
-
-            fakeRoomRepositoryLoop = new Mock<IRepository<Room>>();
-            fakeBookingRepositoryLoop = new Mock<IRepository<Booking>>();
 
             var rooms = new List<Room>
             {
@@ -61,22 +51,11 @@ namespace HotelBooking.UnitTests.Whitebox
                 }
             };
 
-            var roomsLoop = new List<Room>
-            {
-
-            };
-            List<Booking> bookingsLoop = new List<Booking>
-            {
-
-            };
-
+            
             // Implement fake GetAll() method.
             fakeBookingRepository.Setup(x => x.GetAll()).Returns(bookings);
             fakeCustomerRepository.Setup(x => x.GetAll()).Returns(customers);
             fakeRoomRepository.Setup(x => x.GetAll()).Returns(rooms);
-
-            fakeRoomRepositoryLoop.Setup(x => x.GetAll()).Returns(roomsLoop);
-            fakeBookingRepositoryLoop.Setup(x => x.GetAll()).Returns(bookingsLoop);
             // Implement fake Get() method.
             //fakeBookingRepository.Setup(x => x.Get(2)).Returns(bookings[1]);
 
@@ -93,7 +72,7 @@ namespace HotelBooking.UnitTests.Whitebox
             fakeBookingRepository.Setup(x => x.Get(It.Is<int>(id => id > 0 && id < 3))).Returns(bookings[1]);
             fakeCustomerRepository.Setup(x => x.Get(It.Is<int>(id => id > 0 && id < 3))).Returns(customers[1]);
             fakeRoomRepository.Setup(x => x.Get(It.Is<int>(id => id > 0 && id < 3))).Returns(rooms[1]);
-            
+
 
             // Integers from 1 to 2 (using a range)
             //roomRepository.Setup(x => x.Get(It.IsInRange<int>(1, 2, Range.Inclusive))).Returns(rooms[1]);
@@ -103,62 +82,12 @@ namespace HotelBooking.UnitTests.Whitebox
             bookingmodel = new BookingViewModel(fakeBookingRepository.Object, bookingmanager);
             controller = new BookingsController(fakeBookingRepository.Object, fakeRoomRepository.Object,
                 fakeCustomerRepository.Object, bookingmanager, bookingmodel);
-
-            bookingmanagerLoop = new BookingManager(fakeBookingRepositoryLoop.Object, fakeRoomRepositoryLoop.Object);
-            bookingmodelLoop = new BookingViewModel(fakeBookingRepositoryLoop.Object, bookingmanagerLoop);
-            controllerLoop = new BookingsController(fakeBookingRepositoryLoop.Object, fakeRoomRepositoryLoop.Object,
-                fakeCustomerRepository.Object, bookingmanagerLoop, bookingmodelLoop);
         }
 
-        /*  Edge coverage 
-         * On diagram Node 1
-         * if then
-         * node 3
-         * node 7
-         * node 5
-         *  
-         *  Loop Coverage
-         * node 4
-         * iteration = 2
-         */
         [Fact]
         public void Edge1()
         {
-            var returnValue = bookingmanager.FindAvailableRoom(DateTime.Today.AddDays(4), DateTime.Today.AddDays(5));
-            Assert.Equal(1, returnValue);
-        }
 
-        /*edge coverage 
-         * On diagram Node 2
-         * if else
-         */
-        [Fact]
-        public void Edge2()
-        {
-            Exception ex = Assert.Throws<ArgumentException>(() => bookingmanager.FindAvailableRoom(DateTime.Today.AddDays(-1), DateTime.Today));
-            Assert.Equal(String.Format("The start date cannot be in the past or later than the end date."), ex.Message);
-        }
-
-        /*edge coverage 
-         * On diagram Node 6
-         * if else
-         */
-        [Fact]
-        public void Edge6()
-        {
-            var returnValue = bookingmanager.FindAvailableRoom(DateTime.Today.AddDays(2), DateTime.Today.AddDays(3));
-            Assert.Equal(-1, returnValue);
-        }
-
-        /*  Loop Coverage
-         * node 4
-         * iteration = 0
-         */
-        [Fact]
-        public void Loop0()
-        {
-            var returnValue = bookingmanagerLoop.FindAvailableRoom(DateTime.Today.AddDays(2), DateTime.Today.AddDays(3));
-            Assert.Equal(-1, returnValue);
         }
     }
-}
+} 
