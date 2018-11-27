@@ -30,18 +30,26 @@ namespace WhiteBoxTests
 
             var rooms = new List<Room>
             {
-                new Room { Id=1, Description="A" },
-                new Room { Id=2, Description="B" },
+                new Room {Id = 1, Description = "A"},
+                new Room {Id = 2, Description = "B"},
             };
             var customers = new List<Customer>
             {
-                new Customer { Id=1, Email = "joe@outlook.com", Name = "Joe"},
-                new Customer { Id=2, Email = "bill@outlook.com", Name = "Billy" },
+                new Customer {Id = 1, Email = "joe@outlook.com", Name = "Joe"},
+                new Customer {Id = 2, Email = "bill@outlook.com", Name = "Billy"},
             };
             List<Booking> bookings = new List<Booking>
             {
-                new Booking {Id=1, StartDate=DateTime.Now, EndDate=DateTime.Now, IsActive=true, CustomerId=1, RoomId=1, Customer=customers[0], Room=rooms[0]},
-                new Booking {Id=2, StartDate=DateTime.Now, EndDate=DateTime.Now, IsActive=true, CustomerId=2, RoomId=2, Customer=customers[1], Room=rooms[1]}
+                new Booking
+                {
+                    Id = 1, StartDate = DateTime.Now, EndDate = DateTime.Now, IsActive = true, CustomerId = 1,
+                    RoomId = 1, Customer = customers[0], Room = rooms[0]
+                },
+                new Booking
+                {
+                    Id = 2, StartDate = DateTime.Now, EndDate = DateTime.Now, IsActive = true, CustomerId = 2,
+                    RoomId = 2, Customer = customers[1], Room = rooms[1]
+                }
             };
 
 
@@ -73,17 +81,20 @@ namespace WhiteBoxTests
             // Create BookingController
             bookingmanager = new BookingManager(fakeBookingRepository.Object, fakeRoomRepository.Object);
             bookingmodel = new BookingViewModel(fakeBookingRepository.Object, bookingmanager);
-            controller = new BookingsController(fakeBookingRepository.Object, fakeRoomRepository.Object, fakeCustomerRepository.Object, bookingmanager, bookingmodel);
+            controller = new BookingsController(fakeBookingRepository.Object, fakeRoomRepository.Object,
+                fakeCustomerRepository.Object, bookingmanager, bookingmodel);
         }
-    }
+
         /*edge coverage 
          * On diagram Node 1
          * if then
+         * node 3
          */
         [Fact]
         public void Edge1()
         {
-         
+            var returnValue = bookingmanager.FindAvailableRoom(DateTime.Today.AddDays(1), DateTime.Today.AddDays(2));
+            Assert.Equal(1, returnValue);
         }
 
         /*edge coverage 
@@ -93,16 +104,19 @@ namespace WhiteBoxTests
         [Fact]
         public void Edge2()
         {
-
+            Exception ex = Assert.Throws<ArgumentException>(() => bookingmanager.FindAvailableRoom(DateTime.Today.AddDays(-1), DateTime.Today));
+            Assert.Equal(String.Format("The start date cannot be in the past or later than the end date."), ex.Message);
         }
+
         /*edge coverage 
-         * On diagram Node 2
+         * On diagram Node 4
          * if else
          */
         [Fact]
-        public void Edge2()
+        public void Edge4()
         {
-
+            throw new Exception();
         }
 
+    }
 }
