@@ -20,11 +20,18 @@ namespace HotelBooking.UnitTests.Whitebox
         private BookingManager bookingmanager;
         private BookingViewModel bookingmodel;
 
+        private Mock<IRepository<Booking>> EmptyfakeBookingRepository;
+        private BookingManager Emptybookingmanager;
+        private BookingViewModel Emptybookingmodel;
+        private BookingsController Emptycontroller;
+
         public GetfullyOccupiedDatesTest()
         {
             fakeBookingRepository = new Mock<IRepository<Booking>>();
             fakeCustomerRepository = new Mock<IRepository<Customer>>();
             fakeRoomRepository = new Mock<IRepository<Room>>();
+
+            EmptyfakeBookingRepository = new Mock<IRepository<Booking>>();
 
             var rooms = new List<Room>
             {
@@ -51,11 +58,18 @@ namespace HotelBooking.UnitTests.Whitebox
                 }
             };
 
-            
+            List<Booking> Emptybookings = new List<Booking>
+            {
+
+            };
+
             // Implement fake GetAll() method.
             fakeBookingRepository.Setup(x => x.GetAll()).Returns(bookings);
             fakeCustomerRepository.Setup(x => x.GetAll()).Returns(customers);
             fakeRoomRepository.Setup(x => x.GetAll()).Returns(rooms);
+
+            EmptyfakeBookingRepository.Setup(x => x.GetAll()).Returns(Emptybookings);
+
             // Implement fake Get() method.
             //fakeBookingRepository.Setup(x => x.Get(2)).Returns(bookings[1]);
 
@@ -82,12 +96,75 @@ namespace HotelBooking.UnitTests.Whitebox
             bookingmodel = new BookingViewModel(fakeBookingRepository.Object, bookingmanager);
             controller = new BookingsController(fakeBookingRepository.Object, fakeRoomRepository.Object,
                 fakeCustomerRepository.Object, bookingmanager, bookingmodel);
+
+            Emptybookingmanager = new BookingManager(EmptyfakeBookingRepository.Object, fakeRoomRepository.Object);
+            Emptybookingmodel = new BookingViewModel(EmptyfakeBookingRepository.Object, Emptybookingmanager);
+            Emptycontroller = new BookingsController(EmptyfakeBookingRepository.Object, fakeRoomRepository.Object,
+                fakeCustomerRepository.Object, Emptybookingmanager, Emptybookingmodel);
         }
 
+        /*  Edge coverage 
+         * On diagram Node 1
+         * if else
+         * node 3
+         * node 8
+         */
         [Fact]
         public void Edge1()
         {
+            var returnValue = bookingmanager.GetFullyOccupiedDates(DateTime.Today.AddDays(1), DateTime.Today.AddDays(3));
+            Assert.Equal(2, returnValue.Count);
+        }
+
+        /*  Edge coverage 
+        * On diagram Node 2
+        * if then
+        * 
+        *  Loop Coverage
+        * node 5
+        * iteration = 0
+        */
+        [Fact]
+        public void Edge2()
+        {
+            Exception ex = Assert.Throws<ArgumentException>(() => bookingmanager.GetFullyOccupiedDates(DateTime.Today.AddDays(3), DateTime.Today));
+            Assert.Equal(String.Format("The start date cannot be later than the end date."), ex.Message);
+        }
+
+        /*  Edge coverage 
+        * On diagram Node 4
+        * if else
+        */
+        [Fact]
+        public void Edge4()
+        {
+            var temp = new List<DateTime>();
+            var returnValue = Emptybookingmanager.GetFullyOccupiedDates(DateTime.Today.AddDays(1), DateTime.Today.AddDays(3));
+            Assert.Equal(temp, returnValue);
 
         }
+
+        /*  Edge coverage 
+        * On diagram Node 7
+        * if else
+        */
+        [Fact]
+        public void Edge7()
+        {
+            var returnValue = bookingmanager.GetFullyOccupiedDates(DateTime.Today.AddDays(10), DateTime.Today.AddDays(13));
+            Assert.Empty(returnValue);
+        }
+
+        /*  Loop Coverage
+         * node 5
+         * iteration = 1
+         */
+         [Fact]
+         public void Loop1()
+         {
+            var returnValue = bookingmanager.GetFullyOccupiedDates(DateTime.Today, DateTime.Today);
+            Assert.Empty(returnValue);
+         }
+        
     }
 } 
