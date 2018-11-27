@@ -112,7 +112,7 @@ namespace HotelBooking.UnitTests.Whitebox
 
         /*  Edge coverage 
          * On diagram Node 1
-         * if then
+         * if else
          * node 3
          * node 7
          * node 5
@@ -130,7 +130,7 @@ namespace HotelBooking.UnitTests.Whitebox
 
         /*edge coverage 
          * On diagram Node 2
-         * if else
+         * if then
          */
         [Fact]
         public void Edge2()
