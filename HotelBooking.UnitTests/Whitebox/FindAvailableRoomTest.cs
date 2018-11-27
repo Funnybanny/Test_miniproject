@@ -42,12 +42,12 @@ namespace WhiteBoxTests
             {
                 new Booking
                 {
-                    Id = 1, StartDate = DateTime.Now, EndDate = DateTime.Now, IsActive = true, CustomerId = 1,
+                    Id = 1, StartDate = DateTime.Today.AddDays(2), EndDate = DateTime.Today.AddDays(3), IsActive = true, CustomerId = 1,
                     RoomId = 1, Customer = customers[0], Room = rooms[0]
                 },
                 new Booking
                 {
-                    Id = 2, StartDate = DateTime.Now, EndDate = DateTime.Now, IsActive = true, CustomerId = 2,
+                    Id = 2, StartDate = DateTime.Today.AddDays(1), EndDate = DateTime.Today.AddDays(5), IsActive = true, CustomerId = 2,
                     RoomId = 2, Customer = customers[1], Room = rooms[1]
                 }
             };
@@ -89,11 +89,12 @@ namespace WhiteBoxTests
          * On diagram Node 1
          * if then
          * node 3
+         * node 7
          */
         [Fact]
         public void Edge1()
         {
-            var returnValue = bookingmanager.FindAvailableRoom(DateTime.Today.AddDays(1), DateTime.Today.AddDays(2));
+            var returnValue = bookingmanager.FindAvailableRoom(DateTime.Today.AddDays(4), DateTime.Today.AddDays(5));
             Assert.Equal(1, returnValue);
         }
 
@@ -115,7 +116,8 @@ namespace WhiteBoxTests
         [Fact]
         public void Edge4()
         {
-            throw new Exception();
+            var returnValue = bookingmanager.FindAvailableRoom(DateTime.Today.AddDays(2), DateTime.Today.AddDays(3));
+            Assert.Equal(-1, returnValue);
         }
 
     }
