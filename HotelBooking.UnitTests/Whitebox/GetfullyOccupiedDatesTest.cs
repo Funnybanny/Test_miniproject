@@ -134,10 +134,10 @@ namespace HotelBooking.UnitTests.Whitebox
         }
 
         /*  Edge coverage 
-         * On diagram Node 1
+         * On diagram Node 57
          * if else
-         * node 3
-         * node 8
+         * node 60, 61, 62
+         * node 72
          */
         [Fact]
         public void Edge1()
@@ -147,11 +147,11 @@ namespace HotelBooking.UnitTests.Whitebox
         }
 
         /*  Edge coverage 
-        * On diagram Node 2
+        * On diagram Node 58
         * if then
         * 
         *  Loop Coverage
-        * node 5
+        * node 66
         * iteration = 0
         */
         [Fact]
@@ -162,7 +162,7 @@ namespace HotelBooking.UnitTests.Whitebox
         }
 
         /*  Edge coverage 
-        * On diagram Node 4
+        * On diagram Node 64
         * if else
         */
         [Fact]
@@ -175,7 +175,7 @@ namespace HotelBooking.UnitTests.Whitebox
         }
 
         /*  Edge coverage 
-        * On diagram Node 7
+        * On diagram Node 71
         * if else
         */
         [Fact]
@@ -186,7 +186,7 @@ namespace HotelBooking.UnitTests.Whitebox
         }
 
         /*  Loop Coverage
-         * node 5
+         * node 66
          * iteration = 1
          */
          [Fact]
